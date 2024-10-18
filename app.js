@@ -12,6 +12,11 @@ app.use(bodyParser.json())
 app.use(cors());
 app.use('/api', indexRouter)
 
+// 404 핸들러 추가 (모든 라우트 핸들러 뒤에 위치)
+app.use((req, res) => {
+  res.status(404).send('404 Not Found');
+});
+
 // mongoose setting
 const mongoURI = process.env.MONGODB_URI_PROD;
 console.log('mongoURI', mongoURI)
