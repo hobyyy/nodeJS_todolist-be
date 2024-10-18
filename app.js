@@ -6,6 +6,8 @@ const indexRouter = require('./routes/index')
 require('dotenv').config()
 const app = express()
 
+// Heroku에서 할당된 포트 사용
+const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json())
 app.use(cors());
 app.use('/api', indexRouter)
@@ -23,6 +25,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 })
 
 // app listener setting
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("server on 5000")
 })
