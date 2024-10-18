@@ -12,7 +12,7 @@ app.use('/api', indexRouter)
 
 // mongoose setting
 const mongoURI = process.env.MONGODB_URI_PROD;
-// console.log('mongoURI', mongoURI)
+console.log('mongoURI', mongoURI)
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 .then(() => {
