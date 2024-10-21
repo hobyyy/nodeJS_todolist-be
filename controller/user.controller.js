@@ -1,5 +1,5 @@
 const User = require("../model/User");
-const bcrypt = require('bcrypt')  // 암호화 하는 패키지?
+const bcrypt = require('bcryptjs')  // 암호화 하는 패키지?
 
 const saltRound = 10 // 암호화 할 때 필요한 상수값
 const userController = {}
@@ -22,16 +22,11 @@ userController.createUser = async(req, res) => {
 };
 
 userController.loginWithEmail = async(req,res) => {
-  console.log('req',req);
   try {
     const {email, password} = req.body
-    console.log('email',email);
-    console.log('pw',password);
-    const user = await User.findOne({email},"-createdAt -updatedAt -password -__v")
-    console.log('user',user);
+    const user = await User.findOne({email},"-createdAt -updatedAt -__v")
     if(user) {
       const isCorrect = bcrypt.compare(password, user.password)
-      console.log('isCorrect',isCorrect);
       if(isCorrect) {
         const token = user.generateTocken();
         return res.status(200).json({status:"success", user, token})
