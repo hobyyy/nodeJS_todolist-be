@@ -1,5 +1,5 @@
 const User = require("../model/User");
-const bcrypt = require('bcrypt')  // 암호화 하는 패키지?
+const bcrypt = require('bcryptjs')  // 암호화 하는 패키지?
 
 const saltRound = 10 // 암호화 할 때 필요한 상수값
 const userController = {}

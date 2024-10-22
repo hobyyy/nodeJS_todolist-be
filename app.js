@@ -7,9 +7,14 @@ require('dotenv').config()
 const app = express()
 
 // Heroku에서 할당된 포트 사용
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json())
-app.use(cors());
+
+// app.use(cors());
+app.use(cors({
+  origin: 'https://noonaproject-todolist-app.netlify.app'  // CORS 설정 추가
+}));
+
 app.use('/api', indexRouter)
 
 // 404 핸들러 추가 (모든 라우트 핸들러 뒤에 위치)

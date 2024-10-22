@@ -18,11 +18,11 @@ const userSchema = Schema({
   }
 },{ timestamps:true })
 
-userSchema.methods.toJSON = () => {
-//   const obj = this._doc;
-//   delete obj.password;
-  return this
-}
+// userSchema.methods.toJSON = () => {
+// //   const obj = this._doc;
+// //   delete obj.password;
+//   return this
+// }
 userSchema.methods.generateTocken = () => {
   const token = jwt.sign({_id:this._id}, JWT_SECRET_KEY, {expiresIn: '1d'})
   return token;
