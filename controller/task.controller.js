@@ -4,24 +4,24 @@ const taskController = {}
 
 taskController.createTask = async(req,res) => {
   try {
-    // console.log('Request body:', req.body); // 추가된 로그
     const { task, isComplete } = req.body;
-    const newTask = new Task({ task, isComplete });
+    const userID = req.userID; // auth.controller에서 설정된 사용자 ID
+    const newTask = new Task({ task, isComplete, author: userID });
     await newTask.save();
-  
-    res.status(200).json({status: 'OK', data: newTask});
+    const taskList = await Task.findById(newTask._id).populate('author', 'name email');
+    res.status(200).json({status: 'success', data: newTask});
   }catch(err) {
     // console.error('Error creating task:', err.message); // 추가된 로그
-    res.status(400).json({status: 'FAIL', error: err.message});
+    res.status(400).json({status: 'fail', error: err.message});
   }
 }
 
 taskController.getTask = async(req,res) => {
   try {
-    const taskList = await Task.find({}).select("-__v")
-    res.status(200).json({status: 'OK', data: taskList});
+    const taskList = await Task.find().populate("author", "name email").lean();
+    res.status(200).json({status: 'success', data: taskList});
   }catch(err) {
-    res.status(400).json({status: 'FAIL', error: err});
+    res.status(400).json({status: 'fail', error: err.message});
   }
 }
 
